@@ -1,6 +1,6 @@
-// v14: online fresh-first, offline cached fallback. Never return undefined to respondWith.
-const CACHE='gsm-v14-20261014';
-const ASSETS=['./','./index.html','./icon.svg','./manifest.webmanifest','./emblem_48940.png'];
+// v15: online fresh-first, offline cached fallback. Never return undefined to respondWith.
+const CACHE='gsm-v15-20261014';
+const ASSETS=['./','./index.html','./icon-180.png','./icon-192.png','./icon-512.png','./manifest.webmanifest','./emblem_48940.png'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(ASSETS.map(x=>new Request(x,{cache:'reload'})));await self.skipWaiting();})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('gsm-')&&k!==CACHE)await caches.delete(k);await self.clients.claim();})()));
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin)return;e.respondWith((async()=>{const c=await caches.open(CACHE);try{const response=await fetch(new Request(r,{cache:'no-store'}));if(response.ok)await c.put(r,response.clone());return response;}catch(err){const found=await c.match(r,{ignoreSearch:true})||(r.mode==='navigate'?await c.match('./index.html'):null);return found||new Response('Няма офлайн копие. Отвори приложението веднъж с интернет.',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});}})());});
