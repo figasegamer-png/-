@@ -1,6 +1,6 @@
 // Offline-first application shell. Bump this version whenever the app changes.
-const CACHE = 'gsm-offline-v7-20261013';
-const APP_SHELL = ['./', './index.html', './icon.svg', './manifest.webmanifest'];
+const CACHE = 'gsm-offline-v9-20261014';
+const APP_SHELL = ['./', './index.html', './icon.svg', './manifest.webmanifest', './emblem_48940.png'];
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE);
