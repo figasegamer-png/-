@@ -1,5 +1,5 @@
 // v20: online fresh-first, offline cached fallback. Never return undefined to respondWith.
-const CACHE='gsm-v22-20261015';
+const CACHE='gsm-v23-20261015';
 const ASSETS=['./','./index.html','./icon-180.png','./icon-192.png','./icon-512.png','./manifest.webmanifest','./emblem_48940.png'];
 self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);await c.addAll(ASSETS.map(x=>new Request(x,{cache:'reload'})));await self.skipWaiting();})()));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('gsm-')&&k!==CACHE)await caches.delete(k);await self.clients.claim();})()));
